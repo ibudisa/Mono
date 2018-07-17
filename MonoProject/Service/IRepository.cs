@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    interface IRepository<T> where T:class,new()
+    public interface IRepository<T> where T:class,new()
     {
-       IList<T> GetAll();
+       //IList<T> GetAll(int page = 1,int itemsPerPage = 30, string sortBy = "FirstName", bool reverse = false, string search = null);
        //T GetOne(int id);
        void Add(T value);
        void Update(T value);

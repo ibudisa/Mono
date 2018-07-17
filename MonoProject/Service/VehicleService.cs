@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Dynamic;
 
 namespace Service
 {
@@ -10,12 +11,30 @@ namespace Service
     {
         public void Add(VehicleMake value)
         {
-            throw new NotImplementedException();
+            using (AngularContext angular = new AngularContext())
+            {
+                var vmake = angular.VehicleMakes.Where(a => a.Id == value.Id).FirstOrDefault();
+                if (vmake == null)
+                {
+                    angular.VehicleMakes.Add(value);
+                    angular.SaveChanges();
+
+                }
+            }
         }
 
         public void Add(VehicleModel value)
         {
-            throw new NotImplementedException();
+            using (AngularContext angular = new AngularContext())
+            {
+                var vmodel = angular.VehicleModels.Where(a => a.Id == value.Id).FirstOrDefault();
+                if (vmodel == null)
+                {
+                    angular.VehicleModels.Add(value);
+                    angular.SaveChanges();
+
+                }
+            }
         }
 
         public void DeleteVehicleMake(int id)
@@ -28,10 +47,35 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public IList<VehicleMake> GetAll()
+        
+
+        public IList<VehicleMake> GetAll(int page = 1, int itemsPerPage = 30, string sortBy = "Name", bool reverse = false, string search = null)
         {
-            throw new NotImplementedException();
-        }
+            List<VehicleMake> vehicles = new List<VehicleMake>();
+
+            using (AngularContext angular = new AngularContext())
+            {
+                vehicles = angular.VehicleMakes.ToList();
+            }
+
+                // searching
+                if (!string.IsNullOrWhiteSpace(search))
+                {
+                    search = search.ToLower();
+                    vehicles = vehicles.Where(x =>
+                    x.Name.ToLower().Contains(search) ||
+                    x.Abrv.ToLower().Contains(search)).ToList();
+                }
+
+            // sorting (done with the System.Linq.Dynamic library available on NuGet)
+            vehicles = vehicles.OrderBy(sortBy + (reverse ? " descending" : "")).ToList();
+
+            // paging
+            var vehiclesPaged = vehicles.Skip((page - 1) * itemsPerPage).Take(itemsPerPage).ToList();
+
+            return vehiclesPaged;
+        
+    }
 
         public VehicleMake GetVehicleMake(int id)
         {
@@ -39,6 +83,11 @@ namespace Service
         }
 
         public VehicleModel GetVehicleModel(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<VehicleModel> GetVehicleModelById(int modelid)
         {
             throw new NotImplementedException();
         }
@@ -53,9 +102,33 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        IList<VehicleModel> IRepository<VehicleModel>.GetAll()
+        
+
+        IList<VehicleModel> IVehicleModelRepository.GetAll(int page, int itemsPerPage, string sortBy , bool reverse , string search )
         {
-            throw new NotImplementedException();
+            List<VehicleModel> vehicles = new List<VehicleModel>();
+
+            using (AngularContext angular = new AngularContext())
+            {
+                vehicles = angular.VehicleModels.ToList();
+            }
+
+            // searching
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                search = search.ToLower();
+                vehicles = vehicles.Where(x =>
+                x.Name.ToLower().Contains(search) ||
+                x.Abrv.ToLower().Contains(search)).ToList();
+            }
+
+            // sorting (done with the System.Linq.Dynamic library available on NuGet)
+            vehicles = vehicles.OrderBy(sortBy + (reverse ? " descending" : "")).ToList();
+
+            // paging
+            var vehiclesPaged = vehicles.Skip((page - 1) * itemsPerPage).Take(itemsPerPage).ToList();
+
+            return vehiclesPaged;
         }
     }
 }
