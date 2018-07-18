@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    interface IVehicleService:IVehicleMakeRepository,IVehicleModelRepository
+    public interface IVehicleService:IVehicleMakeRepository,IVehicleModelRepository
     {
          
     }

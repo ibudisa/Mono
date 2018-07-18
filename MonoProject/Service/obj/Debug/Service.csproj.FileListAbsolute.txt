@@ -1,0 +1,12 @@
+E:\MonoProject\Service\bin\Debug\Service.dll.config
+E:\MonoProject\Service\bin\Debug\Service.dll
+E:\MonoProject\Service\bin\Debug\Service.pdb
+E:\MonoProject\Service\bin\Debug\EntityFramework.dll
+E:\MonoProject\Service\bin\Debug\EntityFramework.SqlServer.dll
+E:\MonoProject\Service\bin\Debug\System.Linq.Dynamic.dll
+E:\MonoProject\Service\bin\Debug\EntityFramework.xml
+E:\MonoProject\Service\bin\Debug\EntityFramework.SqlServer.xml
+E:\MonoProject\Service\obj\Debug\Service.csprojResolveAssemblyReference.cache
+E:\MonoProject\Service\obj\Debug\Service.csproj.CoreCompileInputs.cache
+E:\MonoProject\Service\obj\Debug\Service.dll
+E:\MonoProject\Service\obj\Debug\Service.pdb

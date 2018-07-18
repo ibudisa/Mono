@@ -49,7 +49,7 @@ namespace Service
 
         
 
-        public IList<VehicleMake> GetAll(int page = 1, int itemsPerPage = 30, string sortBy = "Name", bool reverse = false, string search = null)
+        public IList<VehicleMake> GetAllVehicleMakes(int page = 1, int itemsPerPage = 30, string sortBy = "Name", bool reverse = false, string search = null)
         {
             List<VehicleMake> vehicles = new List<VehicleMake>();
 
@@ -82,6 +82,11 @@ namespace Service
             throw new NotImplementedException();
         }
 
+        public IList<VehicleMake> GetVehicleMakeById(int modelid)
+        {
+            throw new NotImplementedException();
+        }
+
         public VehicleModel GetVehicleModel(int id)
         {
             throw new NotImplementedException();
@@ -104,7 +109,7 @@ namespace Service
 
         
 
-        IList<VehicleModel> IVehicleModelRepository.GetAll(int page, int itemsPerPage, string sortBy , bool reverse , string search )
+        public IList<VehicleModel> GetAllVehicleModels(int page, int itemsPerPage, string sortBy , bool reverse , string search )
         {
             List<VehicleModel> vehicles = new List<VehicleModel>();
 
