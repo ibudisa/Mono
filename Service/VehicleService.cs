@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Dynamic;
+using PagedList;
+using AutoMapper;
+using Service.ViewModels;
 
 namespace Service
 {
@@ -11,13 +14,13 @@ namespace Service
     {
         public void Add(VehicleMake value)
         {
-            using (VehicleContext angular = new VehicleContext())
+            using (VehicleContext cont = new VehicleContext())
             {
-                var vmake = angular.VehicleMakes.Where(a => a.Id == value.Id).FirstOrDefault();
+                var vmake = cont.VehicleMakes.Where(a => a.Id == value.Id).FirstOrDefault();
                 if (vmake == null)
                 {
-                    angular.VehicleMakes.Add(value);
-                    angular.SaveChanges();
+                    cont.VehicleMakes.Add(value);
+                    cont.SaveChanges();
 
                 }
             }
@@ -25,13 +28,13 @@ namespace Service
 
         public void Add(VehicleModel value)
         {
-            using (VehicleContext angular = new VehicleContext())
+            using (VehicleContext cont = new VehicleContext())
             {
-                var vmodel = angular.VehicleModels.Where(a => a.Id == value.Id).FirstOrDefault();
+                var vmodel = cont.VehicleModels.Where(a => a.Id == value.Id).FirstOrDefault();
                 if (vmodel == null)
                 {
-                    angular.VehicleModels.Add(value);
-                    angular.SaveChanges();
+                    cont.VehicleModels.Add(value);
+                    cont.SaveChanges();
 
                 }
             }
@@ -49,33 +52,64 @@ namespace Service
 
         
 
-        public IList<VehicleMake> GetVehicleMakes(int page = 1, int itemsPerPage = 30, string sortBy = "Name", bool reverse = false, string search = null)
+        public IPagedList<VehicleMakeViewModel> GetVehicleMakes(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            List<VehicleMake> vehicles = new List<VehicleMake>();
 
-            using (VehicleContext angular = new VehicleContext())
+
+            if (searchString != null)
             {
-                vehicles = angular.VehicleMakes.ToList();
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
             }
 
-                // searching
-                if (!string.IsNullOrWhiteSpace(search))
-                {
-                    search = search.ToLower();
-                    vehicles = vehicles.Where(x =>
-                    x.Name.ToLower().Contains(search) ||
-                    x.Abrv.ToLower().Contains(search)).ToList();
-                }
+            List<VehicleMake> vehicles = new List<VehicleMake>();
 
-            // sorting (done with the System.Linq.Dynamic library available on NuGet)
-            vehicles = vehicles.OrderBy(sortBy + (reverse ? " descending" : "")).ToList();
+            using (VehicleContext cont = new VehicleContext())
+            {
+                vehicles = (from s in cont.VehicleMakes
+                            where s.Name == searchString || s.Abrv == searchString
+                            select s).ToList();
+            }
 
-            // paging
-            var vehiclesPaged = vehicles.Skip((page - 1) * itemsPerPage).Take(itemsPerPage).ToList();
+           
 
-            return vehiclesPaged;
-        
-    }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    vehicles = vehicles.OrderByDescending(s => s.Name).ToList();
+                    break;
+                case "Name":
+                    vehicles = vehicles.OrderBy(s => s.Name).ToList();
+                    break;
+                case "Abrv":
+                    vehicles = vehicles.OrderBy(s => s.Abrv).ToList();
+                    break;
+                case "abrv_desc":
+                    vehicles = vehicles.OrderByDescending(s => s.Abrv).ToList();
+                    break;
+                default:  // Name ascending 
+                    vehicles = vehicles.OrderBy(s => s.Name).ToList();
+                    break;
+            }
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+
+            List<VehicleMakeViewModel> list = new List<VehicleMakeViewModel>();
+
+            foreach (var item in vehicles)
+            {
+                VehicleMakeViewModel vehicleMakeViewModel = new VehicleMakeViewModel();
+                vehicleMakeViewModel = Mapper.Map<VehicleMakeViewModel>(item);
+                list.Add(vehicleMakeViewModel);
+            }
+            IPagedList<VehicleMakeViewModel> pagedList = list.ToPagedList(pageNumber, pageSize);
+
+            return pagedList;
+        }
 
         public VehicleMake GetVehicleMake(int id)
         {
@@ -109,31 +143,69 @@ namespace Service
 
         
 
-        public IList<VehicleModel> GetVehicleModels(int page, int itemsPerPage, string sortBy , bool reverse , string search )
+        public IPagedList<VehicleModelViewModel> GetVehicleModels(int makeid,string sortOrder, string currentFilter, string searchString, int? page)
         {
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
             List<VehicleModel> vehicles = new List<VehicleModel>();
 
-            using (VehicleContext angular = new VehicleContext())
+            using (VehicleContext cont = new VehicleContext())
             {
-                vehicles = angular.VehicleModels.ToList();
+                
+                vehicles = (from s in cont.VehicleModels
+                            where (s.Name == searchString || s.Abrv == searchString)&& s.MakeId==makeid
+                            select s).ToList();
             }
 
-            // searching
-            if (!string.IsNullOrWhiteSpace(search))
+
+
+            switch (sortOrder)
             {
-                search = search.ToLower();
-                vehicles = vehicles.Where(x =>
-                x.Name.ToLower().Contains(search) ||
-                x.Abrv.ToLower().Contains(search)).ToList();
+                case "makeid_desc":
+                    vehicles = vehicles.OrderByDescending(s => s.Name).ToList();
+                    break;
+                case "MakeId":
+                    vehicles = vehicles.OrderBy(s => s.Name).ToList();
+                    break;
+                case "name_desc":
+                    vehicles = vehicles.OrderByDescending(s => s.Name).ToList();
+                    break;
+                case "Name":
+                    vehicles = vehicles.OrderBy(s => s.Name).ToList();
+                    break;
+                case "Abrv":
+                    vehicles = vehicles.OrderBy(s => s.Abrv).ToList();
+                    break;
+                case "abrv_desc":
+                    vehicles = vehicles.OrderByDescending(s => s.Abrv).ToList();
+                    break;
+                default:  // Name ascending 
+                    vehicles = vehicles.OrderBy(s => s.Name).ToList();
+                    break;
             }
 
-            // sorting (done with the System.Linq.Dynamic library available on NuGet)
-            vehicles = vehicles.OrderBy(sortBy + (reverse ? " descending" : "")).ToList();
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
 
-            // paging
-            var vehiclesPaged = vehicles.Skip((page - 1) * itemsPerPage).Take(itemsPerPage).ToList();
+            List<VehicleModelViewModel> list = new List<VehicleModelViewModel>();
 
-            return vehiclesPaged;
+            foreach (var item in vehicles)
+            {
+                VehicleModelViewModel vehicleMakeViewModel = new VehicleModelViewModel();
+                vehicleMakeViewModel = Mapper.Map<VehicleModelViewModel>(item);
+                list.Add(vehicleMakeViewModel);
+            }
+            IPagedList<VehicleModelViewModel> pagedList = list.ToPagedList(pageNumber, pageSize);
+
+            return pagedList;
         }
     }
 }

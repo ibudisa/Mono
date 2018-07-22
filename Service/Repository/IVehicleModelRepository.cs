@@ -10,6 +10,6 @@ namespace Service
     {
         VehicleModel GetVehicleModel(int id);
         void DeleteVehicleModel(int id);
-        IList<VehicleModel> GetVehicleModels(int page = 1, int itemsPerPage = 30, string sortBy = "FirstName", bool reverse = false, string search = null);
+        IList<VehicleModel> GetVehicleModels(string sortOrder, string currentFilter, string searchString, int? page);
     }
 }

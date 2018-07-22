@@ -10,7 +10,7 @@ namespace Service
     {
         VehicleMake GetVehicleMake(int id);
         void DeleteVehicleMake(int id);
-        IList<VehicleMake> GetVehicleMakes(int page = 1, int itemsPerPage = 30, string sortBy = "FirstName", bool reverse = false, string search = null);
+        IList<VehicleMake> GetVehicleMakes(string sortOrder, string currentFilter, string searchString, int? page);
         IList<VehicleMake> GetVehicleMakeById(int modelid);
     }
 }
