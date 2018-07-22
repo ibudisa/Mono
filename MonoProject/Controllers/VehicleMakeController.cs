@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using Service;
-using Service.ViewModels;
+
 
 namespace MonoProject.Controllers
 {

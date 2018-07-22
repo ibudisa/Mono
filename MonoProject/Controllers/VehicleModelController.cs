@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
-using Service.ViewModels;
+
 
 namespace MonoProject.Controllers
 {
@@ -34,7 +34,7 @@ namespace MonoProject.Controllers
 
             IPagedList<VehicleModelViewModel> data = vehicleService.GetVehicleModels(id, sortOrder, currentFilter, searchString, page);
 
-            return View();
+            return View(data);
         }
     }
 }

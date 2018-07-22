@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Linq.Dynamic;
 using PagedList;
 using AutoMapper;
-using Service.ViewModels;
+
 
 namespace Service
 {
@@ -116,7 +116,7 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public IList<VehicleMake> GetVehicleMakeById(int modelid)
+        public IList<VehicleMakeViewModel> GetVehicleMakeById(int modelid)
         {
             throw new NotImplementedException();
         }
@@ -126,7 +126,7 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public IList<VehicleModel> GetVehicleModelById(int modelid)
+        public IList<VehicleModelViewModel> GetVehicleModelById(int modelid)
         {
             throw new NotImplementedException();
         }
@@ -206,6 +206,16 @@ namespace Service
             IPagedList<VehicleModelViewModel> pagedList = list.ToPagedList(pageNumber, pageSize);
 
             return pagedList;
+        }
+
+        IList<VehicleMakeViewModel> IVehicleMakeRepository.GetVehicleMakeById(int modelid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPagedList<VehicleModelViewModel> GetVehicleModels(string sortOrder, string currentFilter, string searchString, int? page)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using MonoProject.Models;
+
 using Service;
 using AutoMapper;
 
@@ -41,7 +41,7 @@ namespace MonoProject.Repository
 
         public IList<VehicleMakeViewModel> GetAllVehicleMakes(int page = 1, int itemsPerPage = 30, string sortBy = "Name", bool reverse = false, string search = null)
         {
-            var listmakes = vehicleService.GetAllVehicleMakes(page, itemsPerPage, sortBy, reverse, search);
+            var listmakes = vehicleService.GetVehicleMakes(page, itemsPerPage, sortBy, reverse, search);
             List<VehicleMakeViewModel> models = new List<VehicleMakeViewModel>();
 
             foreach(var item in listmakes)

@@ -8,7 +8,7 @@ namespace Service
     public partial class VehicleContext : DbContext
     {
         public VehicleContext()
-            : base("name=AngularContext")
+            : base("name=VehicleContext")
         {
         }
 
