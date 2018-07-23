@@ -1,0 +1,11 @@
+E:\MonoProject\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+E:\MonoProject\DAL\bin\Debug\DAL.dll.config
+E:\MonoProject\DAL\bin\Debug\DAL.dll
+E:\MonoProject\DAL\bin\Debug\DAL.pdb
+E:\MonoProject\DAL\bin\Debug\EntityFramework.dll
+E:\MonoProject\DAL\bin\Debug\EntityFramework.SqlServer.dll
+E:\MonoProject\DAL\bin\Debug\EntityFramework.xml
+E:\MonoProject\DAL\bin\Debug\EntityFramework.SqlServer.xml
+E:\MonoProject\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+E:\MonoProject\DAL\obj\Debug\DAL.dll
+E:\MonoProject\DAL\obj\Debug\DAL.pdb
