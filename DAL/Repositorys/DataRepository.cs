@@ -68,13 +68,13 @@ namespace DAL.Repositorys
                 searchString = currentFilter;
             }
 
-            List<VehicleMake> vehicles = new List<VehicleMake>();
+            IEnumerable<VehicleMake> vehicles = null;
 
             using (VehicleContext cont = new VehicleContext())
             {
-                vehicles = (from s in cont.VehicleMakes
+                vehicles = from s in cont.VehicleMakes
                             where s.Name == searchString || s.Abrv == searchString
-                            select s).ToList();
+                            select s;
             }
 
 
@@ -118,14 +118,14 @@ namespace DAL.Repositorys
                 searchString = currentFilter;
             }
 
-            List<VehicleModel> vehicles = new List<VehicleModel>();
+            IEnumerable<VehicleModel> vehicles = null;
 
             using (VehicleContext cont = new VehicleContext())
             {
 
-                vehicles = (from s in cont.VehicleModels
+                vehicles = from s in cont.VehicleModels
                             where (s.Name == searchString || s.Abrv == searchString) && s.MakeId == makeid
-                            select s).ToList();
+                            select s;
             }
 
 

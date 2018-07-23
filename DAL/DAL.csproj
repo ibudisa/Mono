@@ -49,8 +49,14 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Domain\VehicleContext.cs" />
+    <Compile Include="Domain\VehicleInitializer.cs" />
     <Compile Include="Domain\VehicleMake.cs" />
     <Compile Include="Domain\VehicleModel.cs" />
+    <Compile Include="Migrations\201807232150485_Vehicle-v1.cs" />
+    <Compile Include="Migrations\201807232150485_Vehicle-v1.Designer.cs">
+      <DependentUpon>201807232150485_Vehicle-v1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorys\DataRepository.cs" />
     <Compile Include="Repositorys\IDataRepository.cs" />
@@ -61,6 +67,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201807232150485_Vehicle-v1.resx">
+      <DependentUpon>201807232150485_Vehicle-v1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

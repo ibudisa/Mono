@@ -6,14 +6,10 @@ E:\MonoProject\Service\bin\Debug\EntityFramework.SqlServer.dll
 E:\MonoProject\Service\bin\Debug\PagedList.dll
 E:\MonoProject\Service\bin\Debug\PagedList.Mvc.dll
 E:\MonoProject\Service\bin\Debug\System.Linq.Dynamic.dll
-E:\MonoProject\Service\bin\Debug\System.ValueTuple.dll
-E:\MonoProject\Service\bin\Debug\AutoMapper.pdb
-E:\MonoProject\Service\bin\Debug\AutoMapper.xml
 E:\MonoProject\Service\bin\Debug\EntityFramework.xml
 E:\MonoProject\Service\bin\Debug\EntityFramework.SqlServer.xml
 E:\MonoProject\Service\bin\Debug\PagedList.xml
 E:\MonoProject\Service\bin\Debug\PagedList.Mvc.xml
-E:\MonoProject\Service\bin\Debug\System.ValueTuple.xml
 E:\MonoProject\Service\obj\Debug\Service.csproj.CoreCompileInputs.cache
 E:\MonoProject\Service\obj\Debug\Service.dll
 E:\MonoProject\Service\obj\Debug\Service.pdb

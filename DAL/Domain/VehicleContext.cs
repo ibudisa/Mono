@@ -4,12 +4,14 @@ namespace DAL.Domain
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using DAL.Migrations;
 
     public partial class VehicleContext : DbContext
     {
         public VehicleContext()
             : base("name=VehicleContext")
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<VehicleContext, DAL.Migrations.Configuration>());
         }
 
         public virtual DbSet<VehicleMake> VehicleMakes { get; set; }
