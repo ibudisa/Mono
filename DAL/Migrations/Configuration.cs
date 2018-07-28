@@ -12,6 +12,7 @@ namespace DAL.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+          
         }
 
         protected override void Seed(DAL.Domain.VehicleContext context)

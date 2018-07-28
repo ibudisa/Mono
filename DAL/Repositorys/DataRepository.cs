@@ -72,9 +72,17 @@ namespace DAL.Repositorys
 
             using (VehicleContext cont = new VehicleContext())
             {
-                vehicles = from s in cont.VehicleMakes
-                            where s.Name == searchString || s.Abrv == searchString
-                            select s;
+                if (searchString != null)
+                {
+                    vehicles = (from s in cont.VehicleMakes
+                                where s.Name == searchString || s.Abrv == searchString
+                                select s).ToList();
+                }
+                else
+                {
+                    vehicles = (from s in cont.VehicleMakes
+                                select s).ToList();
+                }
             }
 
 

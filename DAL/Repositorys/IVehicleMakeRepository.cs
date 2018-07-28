@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositorys
 {
-    public interface IVehicleMakeRepository:IRepository<VehicleMake>
+    public interface IVehicleMakeRepository
     {
-        VehicleMake GetVehicleMake(int id);
+        VehicleMake GetVehicleMake(int? id);
         void DeleteVehicleMake(int id);
         IEnumerable<VehicleMake> GetVehicleMakes(string sortOrder, string currentFilter, string searchString, int? page);
-        IEnumerable<VehicleMake> GetVehicleMakeById(int modelid);
+       
+        void Add(VehicleMake value);
+        void Update(VehicleMake value);
     }
 }

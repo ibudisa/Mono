@@ -7,20 +7,23 @@ using System.Web.Mvc;
 using PagedList;
 using Vehicle.MVC.ViewModels;
 using AutoMapper;
+using Vehicle.MVC.Repositorys;
 
 namespace Vehicle.MVC.Controllers
 {
     public class VehicleModelController : Controller
     {
         // GET: VehicleModel
-        public ActionResult Index(int id,string sortOrder, string currentFilter, string searchString, int? page)
+        public ActionResult Index(int? id,string sortOrder, string currentFilter, string searchString, int? page)
         {
-            VehicleService vehicleService = new VehicleService();
+            VehicleRepository vehicle = VehicleRepository.TheOnly;
 
             ViewBag.CurrentSort = sortOrder;
             ViewBag.MakeIdSortParm = sortOrder == "MakeId" ? "makeid_desc" : "MakeId";
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.AbrvSortParm = sortOrder == "Abrv" ? "abrv_desc" : "Abrv";
+
+            ViewBag.Makeid = id;
 
             if (searchString != null)
             {
@@ -33,20 +36,8 @@ namespace Vehicle.MVC.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
 
-            var vehicles = vehicleService.GetVehicleModels(id, sortOrder, currentFilter, searchString, page);
-
-            List<VehicleModelViewModel> list = new List<VehicleModelViewModel>();
-
-            foreach (var item in vehicles)
-            {
-                VehicleModelViewModel vehicleMakeViewModel = new VehicleModelViewModel();
-                vehicleMakeViewModel = Mapper.Map<VehicleModelViewModel>(item);
-                list.Add(vehicleMakeViewModel);
-            }
-            IPagedList<VehicleModelViewModel> pagedList = list.ToPagedList(pageNumber, pageSize);
+            IPagedList<VehicleModelViewModel> pagedList = vehicle.GetVehicleModels(id, sortOrder, currentFilter, searchString, page);
 
             return View(pagedList);
         }
