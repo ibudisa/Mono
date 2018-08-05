@@ -5,54 +5,59 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Domain;
 using System.Data.Entity;
+using DAL.Models;
 
 namespace DAL.Repositorys
 {
     public class VehicleModelRepository : IVehicleModelRepository
     {
-        private VehicleContext vehiclect = new VehicleContext();
+        private VehicleContext context;
 
-        public void Add(VehicleModel value)
+        public VehicleModelRepository()
         {
-            using (VehicleContext cont = new VehicleContext())
-            {
-                var vmodel = cont.VehicleModels.Where(a => a.Id == value.Id).FirstOrDefault();
+            this.context = new VehicleContext();
+        }
+
+        public void Add(VehicleModelCoreModel value)
+        {
+            var vehicleModel = AutoMapper.Mapper.Map<VehicleModel>(value);
+
+            var vmodel = context.VehicleModels.Where(a => a.Id == value.Id).FirstOrDefault();
                 if (vmodel == null)
                 {
-                    cont.VehicleModels.Add(value);
-                    cont.SaveChanges();
+                    context.VehicleModels.Add(vehicleModel);
+                    context.SaveChanges();
 
                 }
-            }
+            
         }
 
         public void DeleteVehicleModel(int id)
         {
             VehicleModel vehicle;
-            using (VehicleContext cont = new VehicleContext())
-            {
-                vehicle = cont.VehicleModels.Where(a => a.Id == id).FirstOrDefault();
+           
+                vehicle = context.VehicleModels.Where(a => a.Id == id).FirstOrDefault();
                 if (vehicle != null)
                 {
-                    cont.VehicleModels.Remove(vehicle);
-                    cont.SaveChanges();
+                    context.VehicleModels.Remove(vehicle);
+                    context.SaveChanges();
 
                 }
-            }
+           
         }
 
-        public VehicleModel GetVehicleModel(int id)
+        public VehicleModelCoreModel GetVehicleModel(int id)
         {
             VehicleModel vehicle;
-            using (VehicleContext cont = new VehicleContext())
-            {
-                vehicle = cont.VehicleModels.Where(a => a.Id == id).FirstOrDefault();
 
-            }
-            return vehicle;
+            vehicle = context.VehicleModels.Where(a => a.Id == id).FirstOrDefault();
+
+            var vehicleModel = AutoMapper.Mapper.Map<VehicleModelCoreModel>(vehicle);
+
+            return vehicleModel;
         }
 
-        public IEnumerable<VehicleModel> GetVehicleModels(int? makeid, string sortOrder, string currentFilter, string searchString, int? page)
+        public IQueryable<VehicleModelCoreModel> GetVehicleModels(int? makeid, string sortOrder, string currentFilter, string searchString, int? page)
         {
             if (searchString != null)
             {
@@ -63,19 +68,19 @@ namespace DAL.Repositorys
                 searchString = currentFilter;
             }
 
-            IEnumerable<VehicleModel> vehicles = null;
+            IQueryable<VehicleModel> vehicles = null;
 
             if (searchString != null)
             {
 
-                vehicles = from s in vehiclect.VehicleModels
+                vehicles = from s in context.VehicleModels
                            where (s.Name == searchString || s.Abrv == searchString) && s.MakeId == makeid
                            select s;
 
             }
             else
             {
-                vehicles = (from s in vehiclect.VehicleModels
+                vehicles = (from s in context.VehicleModels
                             select s);
             }
 
@@ -83,53 +88,67 @@ namespace DAL.Repositorys
             switch (sortOrder)
             {
                 case "makeid_desc":
-                    vehicles = vehicles.OrderByDescending(s => s.Name).ToList();
+                    vehicles = vehicles.OrderByDescending(s => s.Name);
                     break;
                 case "MakeId":
-                    vehicles = vehicles.OrderBy(s => s.Name).ToList();
+                    vehicles = vehicles.OrderBy(s => s.Name);
                     break;
                 case "name_desc":
-                    vehicles = vehicles.OrderByDescending(s => s.Name).ToList();
+                    vehicles = vehicles.OrderByDescending(s => s.Name);
                     break;
                 case "Name":
-                    vehicles = vehicles.OrderBy(s => s.Name).ToList();
+                    vehicles = vehicles.OrderBy(s => s.Name);
                     break;
                 case "Abrv":
-                    vehicles = vehicles.OrderBy(s => s.Abrv).ToList();
+                    vehicles = vehicles.OrderBy(s => s.Abrv);
                     break;
                 case "abrv_desc":
-                    vehicles = vehicles.OrderByDescending(s => s.Abrv).ToList();
+                    vehicles = vehicles.OrderByDescending(s => s.Abrv);
                     break;
                 default:  // Name ascending 
-                    vehicles = vehicles.OrderBy(s => s.Name).ToList();
+                    vehicles = vehicles.OrderBy(s => s.Name);
                     break;
             }
 
-            return vehicles;
+            List<VehicleModelCoreModel> list = new List<VehicleModelCoreModel>();
+
+            foreach (var item in vehicles)
+            {
+                VehicleModelCoreModel vehicleMakeViewModel = new VehicleModelCoreModel();
+                vehicleMakeViewModel = AutoMapper.Mapper.Map<VehicleModelCoreModel>(item);
+                list.Add(vehicleMakeViewModel);
+            }
+
+            return list.AsQueryable();
         }
 
-        public IEnumerable<VehicleModel> GetVehicleModelsById(int makeid)
+        public IQueryable<VehicleModelCoreModel> GetVehicleModelsById(int makeid)
         {
              
-            IEnumerable<VehicleModel> vehicles;
-            using (VehicleContext cont = new VehicleContext())
-            {
-                vehicles = from a in cont.VehicleModels
+            IQueryable<VehicleModel> vehicles;
+            
+                vehicles = from a in context.VehicleModels
                            where a.MakeId==makeid
                            select a;
 
+            List<VehicleModelCoreModel> list = new List<VehicleModelCoreModel>();
+
+            foreach (var item in vehicles)
+            {
+                VehicleModelCoreModel vehicleMakeViewModel = new VehicleModelCoreModel();
+                vehicleMakeViewModel = AutoMapper.Mapper.Map<VehicleModelCoreModel>(item);
+                list.Add(vehicleMakeViewModel);
             }
-            return vehicles;
+            return list.AsQueryable();
              
         }
 
-        public void Update(VehicleModel value)
+        public void Update(VehicleModelCoreModel value)
         {
             if (value != null && value.Id > 0)
             {
-                using (VehicleContext cts = new VehicleContext())
-                {
-                    var CurrentVehicle = cts.VehicleModels.Where(a => a.Id == value.Id).SingleOrDefault();
+                
+                    var CurrentVehicle = context.VehicleModels.Where(a => a.Id == value.Id).SingleOrDefault();
                     if (CurrentVehicle != null)
                     {
                         CurrentVehicle.MakeId = value.MakeId;
@@ -137,11 +156,11 @@ namespace DAL.Repositorys
                         CurrentVehicle.Abrv = value.Abrv;
 
 
-                        cts.VehicleModels.Attach(CurrentVehicle);
-                        cts.Entry(CurrentVehicle).State = EntityState.Modified;
-                        cts.SaveChanges();
+                        context.VehicleModels.Attach(CurrentVehicle);
+                        context.Entry(CurrentVehicle).State = EntityState.Modified;
+                        context.SaveChanges();
                     }
-                }
+                 
             }
         }
     }

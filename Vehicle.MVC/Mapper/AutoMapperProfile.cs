@@ -5,6 +5,7 @@ using System.Web;
 using AutoMapper;
 using DAL.Domain;
 using Vehicle.MVC.ViewModels;
+using DAL.Models;
 
 namespace MonoProject.Mapper
 {
@@ -12,8 +13,14 @@ namespace MonoProject.Mapper
     {
         public AutoMapperProfile()
         {
-            CreateMap<VehicleMake, VehicleMakeViewModel>().ReverseMap();
-            CreateMap<VehicleModel, VehicleModelViewModel>().ReverseMap();
+            CreateMap<VehicleMakeCoreModel, VehicleMakeViewModel>().ReverseMap();
+            CreateMap<VehicleModelCoreModel, VehicleModelViewModel>().ReverseMap();
+            
+        }
+
+        public override string ProfileName
+        {
+            get { return "CoreToViewModelMappings"; }
         }
     }
 }

@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Domain;
-
+using DAL.Models;
 
 namespace DAL.Repositorys
 {
      public interface IVehicleModelRepository 
     {
-        VehicleModel GetVehicleModel(int id);
+        VehicleModelCoreModel GetVehicleModel(int id);
         void DeleteVehicleModel(int id);
-        IEnumerable<VehicleModel> GetVehicleModels(int? makeid, string sortOrder, string currentFilter, string searchString, int? page);
-        void Add(VehicleModel value);
-        void Update(VehicleModel value);
-        IEnumerable<VehicleModel> GetVehicleModelsById(int modelid);
+        IQueryable<VehicleModelCoreModel> GetVehicleModels(int? makeid, string sortOrder, string currentFilter, string searchString, int? page);
+        void Add(VehicleModelCoreModel value);
+        void Update(VehicleModelCoreModel value);
+        IQueryable<VehicleModelCoreModel> GetVehicleModelsById(int modelid);
     }
 }

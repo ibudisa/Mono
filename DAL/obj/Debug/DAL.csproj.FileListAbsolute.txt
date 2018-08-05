@@ -11,3 +11,8 @@ E:\MonoProject\DAL\obj\Debug\DAL.pdb
 E:\MonoProject\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 E:\MonoProject\DAL\obj\Debug\DAL.Migrations.Vehiclev1.resources
 E:\MonoProject\DAL\obj\Debug\DAL.csproj.GenerateResource.Cache
+E:\MonoProject\DAL\bin\Debug\AutoMapper.dll
+E:\MonoProject\DAL\bin\Debug\System.ValueTuple.dll
+E:\MonoProject\DAL\bin\Debug\AutoMapper.pdb
+E:\MonoProject\DAL\bin\Debug\AutoMapper.xml
+E:\MonoProject\DAL\bin\Debug\System.ValueTuple.xml

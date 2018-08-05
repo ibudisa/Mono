@@ -12,10 +12,16 @@ namespace Vehicle.MVC.ViewModels
 
         public int? MakeId { get; set; }
 
-        [StringLength(50)]
+        [Required(ErrorMessage = "Name {0} is required")]
+        [StringLength(50, MinimumLength = 3,
+        ErrorMessage = "Name Should be minimum 3 characters and a maximum of 50 characters")]
+        [DataType(DataType.Text)]
         public string Name { get; set; }
 
-        [StringLength(50)]
+        [Required(ErrorMessage = "Abrv {0} is required")]
+        [StringLength(50, MinimumLength = 2,
+         ErrorMessage = "Name Should be minimum 2 characters and a maximum of 50 characters")]
+        [DataType(DataType.Text)]
         public string Abrv { get; set; }
     }
 }

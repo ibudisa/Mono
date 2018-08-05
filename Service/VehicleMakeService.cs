@@ -7,6 +7,7 @@ using System.Linq.Dynamic;
 using DAL;
 using DAL.Domain;
 using DAL.Repositorys;
+using DAL.Models;
 
 namespace Service
 {
@@ -15,7 +16,7 @@ namespace Service
 
         private IVehicleMakeRepository dataRepository = new VehicleMakeRepository();
 
-        public void Add(VehicleMake value)
+        public void Add(VehicleMakeCoreModel value)
         {
             dataRepository.Add(value);
         }
@@ -29,15 +30,15 @@ namespace Service
 
        
 
-        public IEnumerable<VehicleMake> GetVehicleMakes(string sortOrder, string currentFilter, string searchString, int? page)
+        public IEnumerable<VehicleMakeCoreModel> GetVehicleMakes(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            IEnumerable<VehicleMake> list = dataRepository.GetVehicleMakes(sortOrder, currentFilter, searchString, page);
+            IQueryable<VehicleMakeCoreModel> list = dataRepository.GetVehicleMakes(sortOrder, currentFilter, searchString, page);
 
             return list;
 
         }
 
-        public VehicleMake GetVehicleMake(int? id)
+        public VehicleMakeCoreModel GetVehicleMake(int? id)
         {
            var vehiclemake= dataRepository.GetVehicleMake(id);
 
@@ -45,7 +46,7 @@ namespace Service
         }
 
 
-        public void Update(VehicleMake value)
+        public void Update(VehicleMakeCoreModel value)
         {
             dataRepository.Update(value);
         }

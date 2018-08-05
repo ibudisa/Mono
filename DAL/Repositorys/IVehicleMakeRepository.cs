@@ -1,4 +1,5 @@
 ﻿using DAL.Domain;
+using DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,11 @@ namespace DAL.Repositorys
 {
     public interface IVehicleMakeRepository
     {
-        VehicleMake GetVehicleMake(int? id);
+        VehicleMakeCoreModel GetVehicleMake(int? id);
         void DeleteVehicleMake(int id);
-        IEnumerable<VehicleMake> GetVehicleMakes(string sortOrder, string currentFilter, string searchString, int? page);
+        IQueryable<VehicleMakeCoreModel> GetVehicleMakes(string sortOrder, string currentFilter, string searchString, int? page);
        
-        void Add(VehicleMake value);
-        void Update(VehicleMake value);
+        void Add(VehicleMakeCoreModel value);
+        void Update(VehicleMakeCoreModel value);
     }
 }

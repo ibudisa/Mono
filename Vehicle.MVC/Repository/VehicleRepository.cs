@@ -8,6 +8,7 @@ using Service;
 using Vehicle.MVC.ViewModels;
 using AutoMapper;
 using PagedList;
+using DAL.Models;
 
 namespace Vehicle.MVC.Repositorys
 {
@@ -37,13 +38,13 @@ namespace Vehicle.MVC.Repositorys
         public void Add(VehicleMakeViewModel value)
         {
              
-            var mapped = Mapper.Map<VehicleMake>(value);
+            var mapped = Mapper.Map<VehicleMakeCoreModel>(value);
             servicemake.Add(mapped);
         }
 
         public void Add(VehicleModelViewModel value)
         {
-            var mapped = Mapper.Map<VehicleModel>(value);
+            var mapped = Mapper.Map<VehicleModelCoreModel>(value);
             servicemodel.Add(mapped);
         }
 
@@ -128,13 +129,13 @@ namespace Vehicle.MVC.Repositorys
 
         public void Update(VehicleMakeViewModel value)
         {
-            var mapped = Mapper.Map<VehicleMake>(value);
+            var mapped = Mapper.Map<VehicleMakeCoreModel>(value);
             servicemake.Update(mapped);
         }
 
         public void Update(VehicleModelViewModel value)
         {
-            var mapped = Mapper.Map<VehicleModel>(value);
+            var mapped = Mapper.Map<VehicleModelCoreModel>(value);
             servicemodel.Update(mapped);
         }
 

@@ -9,6 +9,8 @@ using AutoMapper;
 using DAL.Domain;
 using Vehicle.MVC.ViewModels;
 using MonoProject.Mapper;
+using DAL.Mapper;
+using MonoProject.App_Start;
 
 namespace MonoProject
 {
@@ -21,7 +23,7 @@ namespace MonoProject
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            AutoMapper.Mapper.Initialize(cfg => cfg.AddProfile<AutoMapperProfile>());
+            AutoMapperConfiguration.Configure();
         }
     }
 }

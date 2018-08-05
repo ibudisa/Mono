@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Repositorys;
 using DAL.Domain;
+using DAL.Models;
 
 namespace Service
 {
@@ -12,29 +13,29 @@ namespace Service
     {
         private IVehicleModelRepository repository = new VehicleModelRepository();
 
-        public VehicleModel GetVehicleModel(int id)
+        public VehicleModelCoreModel GetVehicleModel(int id)
         {
             var vehiclemodel = repository.GetVehicleModel(id);
 
             return vehiclemodel;
         }
 
-        public IEnumerable<VehicleModel> GetVehicleModelById(int makeid)
+        public IQueryable<VehicleModelCoreModel> GetVehicleModelById(int makeid)
         {
             var models = repository.GetVehicleModelsById(makeid);
 
             return models;
         }
 
-        public IEnumerable<VehicleModel> GetVehicleModels(int? makeid, string sortOrder, string currentFilter, string searchString, int? page)
+        public IQueryable<VehicleModelCoreModel> GetVehicleModels(int? makeid, string sortOrder, string currentFilter, string searchString, int? page)
         {
 
-            IEnumerable<VehicleModel> vehicleModel = repository.GetVehicleModels(makeid, sortOrder, currentFilter, searchString, page);
+            IQueryable<VehicleModelCoreModel> vehicleModel = repository.GetVehicleModels(makeid, sortOrder, currentFilter, searchString, page);
             return vehicleModel;
         }
  
 
-        public void Add(VehicleModel value)
+        public void Add(VehicleModelCoreModel value)
         {
             repository.Add(value);
         }
@@ -43,7 +44,7 @@ namespace Service
         {
             repository.DeleteVehicleModel(id);
         }
-        public void Update(VehicleModel value)
+        public void Update(VehicleModelCoreModel value)
         {
             repository.Update(value);
         }
