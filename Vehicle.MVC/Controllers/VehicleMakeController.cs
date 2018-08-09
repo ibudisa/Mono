@@ -12,6 +12,7 @@ using DAL.Domain;
 using Vehicle.MVC.Repositorys;
 using System.Net;
 using System.Data.Entity.Infrastructure;
+using DAL.Models;
 
 namespace Vehicle.MVC.Controllers
 {
@@ -23,14 +24,14 @@ namespace Vehicle.MVC.Controllers
          public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
             {
                VehicleRepository vehicle = VehicleRepository.TheOnly;
-
-                ViewBag.CurrentSort = sortOrder;
+                int pageNumber = (page ?? 1);
+               ViewBag.CurrentSort = sortOrder;
                 ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
                 ViewBag.AbrvSortParm = sortOrder == "Abrv" ? "abrv_desc" : "Abrv";
 
                 if (searchString != null)
                 {
-                    page = 1;
+                    
                 }
                 else
                 {
@@ -39,10 +40,32 @@ namespace Vehicle.MVC.Controllers
 
                 ViewBag.CurrentFilter = searchString;
 
+            VehicleMakeCoreModel model = new VehicleMakeCoreModel();
 
-            IPagedList<VehicleMakeViewModel> pagedlist = vehicle.GetVehicleMakes(sortOrder, currentFilter, searchString, page);          
+            model.Filter = currentFilter;
+            model.SearchString = searchString;
+            model.SortValue = sortOrder;
+            model.Page = pageNumber;
 
-            return View(pagedlist);
+            IList<VehicleMakeCoreModel> data = vehicle.GetVehicleMakes(model);
+            List<VehicleMakeViewModel> list = new List<VehicleMakeViewModel>();
+
+            //var list = new PagedList<VehicleMakeViewModel>(page);
+
+            //Mapper.Initialize(cfg => {
+            //    cfg.CreateMap<VehicleMake, VehicleMakeViewModel>();
+            //    /* etc */
+            //});
+            
+            foreach (var item in data)
+            {
+                VehicleMakeViewModel vehicleMakeViewModel = new VehicleMakeViewModel();
+                vehicleMakeViewModel = Mapper.Map<VehicleMakeViewModel>(item);
+                list.Add(vehicleMakeViewModel);
+            }
+            var outputList = list.ToPagedList(pageNumber, 3);
+
+            return View(outputList);
             
         }
 

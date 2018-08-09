@@ -57,24 +57,21 @@ namespace DAL.Repositorys
             return vehicleModel;
         }
 
-        public IQueryable<VehicleModelCoreModel> GetVehicleModels(int? makeid, string sortOrder, string currentFilter, string searchString, int? page)
+        public IQueryable<VehicleModelCoreModel> GetVehicleModels(int? makeid,VehicleModelCoreModel model)
         {
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
+            //if (model.SearchString == null)
+            //{
+            //    model.SearchString = model.Filter;
+            //}
+           
 
             IQueryable<VehicleModel> vehicles = null;
 
-            if (searchString != null)
+            if (model.SearchString != null)
             {
 
                 vehicles = from s in context.VehicleModels
-                           where (s.Name == searchString || s.Abrv == searchString) && s.MakeId == makeid
+                           where (s.Name == model.SearchString || s.Abrv == model.SearchString) && s.MakeId == makeid
                            select s;
 
             }
@@ -85,7 +82,7 @@ namespace DAL.Repositorys
             }
 
 
-            switch (sortOrder)
+            switch (model.SearchString)
             {
                 case "makeid_desc":
                     vehicles = vehicles.OrderByDescending(s => s.Name);
@@ -114,9 +111,12 @@ namespace DAL.Repositorys
 
             foreach (var item in vehicles)
             {
-                VehicleModelCoreModel vehicleMakeViewModel = new VehicleModelCoreModel();
-                vehicleMakeViewModel = AutoMapper.Mapper.Map<VehicleModelCoreModel>(item);
-                list.Add(vehicleMakeViewModel);
+                if (item != null)
+                {
+                    VehicleModelCoreModel vehicleMakeViewModel = new VehicleModelCoreModel();
+                    vehicleMakeViewModel = AutoMapper.Mapper.Map<VehicleModelCoreModel>(item);
+                    list.Add(vehicleMakeViewModel);
+                }
             }
 
             return list.AsQueryable();

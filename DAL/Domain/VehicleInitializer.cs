@@ -9,8 +9,8 @@ namespace DAL.Domain
 {
     public class VehicleInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<VehicleContext>
     {
-        protected override void Seed(VehicleContext context)
-        {
+        //protected override void Seed(VehicleContext context)
+        //{
             //var makes = new List<VehicleMake>
             //{
             //new VehicleMake{Name="BMW",Abrv="11"},
@@ -34,6 +34,6 @@ namespace DAL.Domain
             //models.ForEach(s => context.VehicleModels.Add(s));
             //context.SaveChanges();
             //base.Seed(context);
-        }
+        //}
     }
 }

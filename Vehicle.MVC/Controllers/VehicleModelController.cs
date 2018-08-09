@@ -8,6 +8,7 @@ using PagedList;
 using Vehicle.MVC.ViewModels;
 using AutoMapper;
 using Vehicle.MVC.Repositorys;
+using DAL.Models;
 
 namespace Vehicle.MVC.Controllers
 {
@@ -36,10 +37,17 @@ namespace Vehicle.MVC.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
+            VehicleModelCoreModel model = new VehicleModelCoreModel();
+            model.Filter = currentFilter;
+            model.SearchString = searchString;
+            model.SortValue = sortOrder;
+            model.Page = page;
 
-            IPagedList<VehicleModelViewModel> pagedList = vehicle.GetVehicleModels(id, sortOrder, currentFilter, searchString, page);
+            PagedList<VehicleModelCoreModel> pagedList = vehicle.GetVehicleModels(id,model) as PagedList<VehicleModelCoreModel>;
 
-            return View(pagedList);
+            var outputList = Mapper.Map<PagedList<VehicleModelCoreModel>, PagedList<VehicleModelViewModel>>(pagedList);
+
+            return View(outputList);
         }
     }
 }

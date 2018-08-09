@@ -14,7 +14,7 @@ namespace DAL.Repositorys
     {
         VehicleMakeCoreModel GetVehicleMake(int? id);
         void DeleteVehicleMake(int id);
-        IQueryable<VehicleMakeCoreModel> GetVehicleMakes(string sortOrder, string currentFilter, string searchString, int? page);
+        IQueryable<VehicleMakeCoreModel> GetVehicleMakes(VehicleMakeCoreModel model);
        
         void Add(VehicleMakeCoreModel value);
         void Update(VehicleMakeCoreModel value);

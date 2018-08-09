@@ -9,6 +9,14 @@ namespace DAL.Models
 {
     public class VehicleModelCoreModel
     {
+        public int? Page { get; set; }
+
+        public  string SearchString { get; set; }
+
+        public  string Filter { get; set; }
+
+        public  string SortValue { get; set; }
+
         public int Id { get; set; }
 
         public int? MakeId { get; set; }

@@ -27,10 +27,10 @@ namespace Service
             return models;
         }
 
-        public IQueryable<VehicleModelCoreModel> GetVehicleModels(int? makeid, string sortOrder, string currentFilter, string searchString, int? page)
+        public IQueryable<VehicleModelCoreModel> GetVehicleModels(int? makeid,VehicleModelCoreModel model)
         {
 
-            IQueryable<VehicleModelCoreModel> vehicleModel = repository.GetVehicleModels(makeid, sortOrder, currentFilter, searchString, page);
+            IQueryable<VehicleModelCoreModel> vehicleModel = repository.GetVehicleModels(makeid,model);
             return vehicleModel;
         }
  

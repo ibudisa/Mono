@@ -12,7 +12,7 @@ namespace DAL.Repositorys
     {
         VehicleModelCoreModel GetVehicleModel(int id);
         void DeleteVehicleModel(int id);
-        IQueryable<VehicleModelCoreModel> GetVehicleModels(int? makeid, string sortOrder, string currentFilter, string searchString, int? page);
+        IQueryable<VehicleModelCoreModel> GetVehicleModels(int? makeid,VehicleModelCoreModel model);
         void Add(VehicleModelCoreModel value);
         void Update(VehicleModelCoreModel value);
         IQueryable<VehicleModelCoreModel> GetVehicleModelsById(int modelid);

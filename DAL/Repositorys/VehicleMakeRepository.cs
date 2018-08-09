@@ -59,23 +59,20 @@ namespace DAL.Repositorys
 
        
 
-        public IQueryable<VehicleMakeCoreModel> GetVehicleMakes(string sortOrder, string currentFilter, string searchString, int? page)
+        public IQueryable<VehicleMakeCoreModel> GetVehicleMakes(VehicleMakeCoreModel model)
         {
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
+            //if (model.SearchString == null)
+            //{
+            //    model.SearchString = model.Filter;
+            //}
+           
 
             IQueryable<VehicleMake> vehicles = null;
 
-              if (searchString != null)
+              if (model.SearchString != null)
                 {
                     vehicles = from s in context.VehicleMakes
-                                where s.Name == searchString || s.Abrv == searchString
+                                where s.Name == model.SearchString || s.Abrv == model.SearchString
                                 select s;
                 }
                 else
@@ -87,7 +84,7 @@ namespace DAL.Repositorys
 
 
 
-            switch (sortOrder)
+            switch (model.SortValue)
             {
                 case "name_desc":
                     vehicles = vehicles.OrderByDescending(s => s.Name);
@@ -110,9 +107,12 @@ namespace DAL.Repositorys
 
             foreach (var item in vehicles)
             {
-                VehicleMakeCoreModel vehicleMakeViewModel = new VehicleMakeCoreModel();
-                vehicleMakeViewModel =AutoMapper.Mapper.Map<VehicleMakeCoreModel>(item);
-                list.Add(vehicleMakeViewModel);
+                if (item != null)
+                {
+                    VehicleMakeCoreModel vehicleMakeViewModel = new VehicleMakeCoreModel();
+                    vehicleMakeViewModel = AutoMapper.Mapper.Map<VehicleMakeCoreModel>(item);
+                    list.Add(vehicleMakeViewModel);
+                }
             }
 
             return list.AsQueryable();

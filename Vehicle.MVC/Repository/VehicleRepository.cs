@@ -67,27 +67,27 @@ namespace Vehicle.MVC.Repositorys
 
      
 
-        public IPagedList<VehicleMakeViewModel> GetVehicleMakes(string sortOrder, string currentFilter, string searchString, int? page)
+        public IList<VehicleMakeCoreModel> GetVehicleMakes(VehicleMakeCoreModel model)
         {
             int pageSize = 3;
-            int pageNumber = (page ?? 1);
+            int pageNumber = (model.Page ?? 1);
 
-            List<VehicleMakeViewModel> list = new List<VehicleMakeViewModel>();
+        
 
-            var vehicles = servicemake.GetVehicleMakes(sortOrder, currentFilter, searchString, page);
+            var vehicles = servicemake.GetVehicleMakes(model);
 
             //Mapper.Initialize(cfg => {
             //    cfg.CreateMap<VehicleMake, VehicleMakeViewModel>();
             //    /* etc */
             //});
 
-            foreach (var item in vehicles)
-            {
-                VehicleMakeViewModel vehicleMakeViewModel = new VehicleMakeViewModel();
-                vehicleMakeViewModel = Mapper.Map<VehicleMakeViewModel>(item);
-                list.Add(vehicleMakeViewModel);
-            }
-            IPagedList<VehicleMakeViewModel> pagedList = list.ToPagedList(pageNumber, pageSize);
+            //foreach (var item in vehicles)
+            //{
+            //    VehicleMakeViewModel vehicleMakeViewModel = new VehicleMakeViewModel();
+            //    vehicleMakeViewModel = Mapper.Map<VehicleMakeViewModel>(item);
+            //    list.Add(vehicleMakeViewModel);
+            //}
+            IList<VehicleMakeCoreModel> pagedList = vehicles.Skip(pageNumber - 1).Take(pageSize).ToList();
 
             return pagedList;
         }
@@ -101,27 +101,27 @@ namespace Vehicle.MVC.Repositorys
             return mapped;
         }
 
-        public IPagedList<VehicleModelViewModel> GetVehicleModels(int? makeid,string sortOrder, string currentFilter, string searchString, int? page)
+        public IPagedList<VehicleModelCoreModel> GetVehicleModels(int? makeid,VehicleModelCoreModel model)
         {
             int pageSize = 3;
-            int pageNumber = (page ?? 1);
+            int pageNumber = (model.Page ?? 1);
 
-            List<VehicleModelViewModel> list = new List<VehicleModelViewModel>();
+            //List<VehicleModelViewModel> list = new List<VehicleModelViewModel>();
 
-            var vehicles = servicemodel.GetVehicleModels(makeid,sortOrder, currentFilter, searchString, page);
+            var vehicles = servicemodel.GetVehicleModels(makeid,model);
 
             //Mapper.Initialize(cfg => {
             //    cfg.CreateMap<VehicleMake, VehicleMakeViewModel>();
             //    /* etc */
             //});
 
-            foreach (var item in vehicles)
-            {
-                VehicleModelViewModel vehicleMakeViewModel = new VehicleModelViewModel();
-                vehicleMakeViewModel = Mapper.Map<VehicleModelViewModel>(item);
-                list.Add(vehicleMakeViewModel);
-            }
-            IPagedList<VehicleModelViewModel> pagedList = list.ToPagedList(pageNumber, pageSize);
+            //foreach (var item in vehicles)
+            //{
+            //    VehicleModelViewModel vehicleMakeViewModel = new VehicleModelViewModel();
+            //    vehicleMakeViewModel = Mapper.Map<VehicleModelViewModel>(item);
+            //    list.Add(vehicleMakeViewModel);
+            //}
+            IPagedList<VehicleModelCoreModel> pagedList = vehicles.ToPagedList(pageNumber, pageSize);
 
             return pagedList;
     

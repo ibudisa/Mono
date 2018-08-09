@@ -30,9 +30,9 @@ namespace Service
 
        
 
-        public IEnumerable<VehicleMakeCoreModel> GetVehicleMakes(string sortOrder, string currentFilter, string searchString, int? page)
+        public IEnumerable<VehicleMakeCoreModel> GetVehicleMakes(VehicleMakeCoreModel model)
         {
-            IQueryable<VehicleMakeCoreModel> list = dataRepository.GetVehicleMakes(sortOrder, currentFilter, searchString, page);
+            IQueryable<VehicleMakeCoreModel> list = dataRepository.GetVehicleMakes(model);
 
             return list;
 
